@@ -20,7 +20,7 @@ function print_welcome() {
 	echo "###                                                                         ###"
 	echo "###                      Velum masternode autosetup script                  ###"
 	echo "###                                                                         ###"
-	echo "###               Version: ${VERSION}                                             ###"
+	echo "###                                Version: ${VERSION}                            ###"
 	echo "###                                                                         ###"
 	echo "###############################################################################"
 	echo
@@ -46,16 +46,7 @@ function run_questionnaire() {
 	echo "###      SYSTEM PREPARATION PART     ###"
 	## System update
 	echo
-	read -n1 -p 'Update system packages? [Y/n]: ' sysupdtxt
-	echo "#    Update system packages? [Y/n]: ${sysupdtxt}" >>${LOGFILE}
-	echo
-	if [ "$sysupdtxt" = "" ] || [ "$sysupdtxt" = "y" ] || [ "$sysupdtxt" = "Y" ]; then
-		sysupdate=1
-	elif [ "$sysupdtxt" = "n" ] || [ "$sysupdtxt" = "N" ]; then
-		sysupdate=0
-	else
-		echo "Incorrect answer, system will not be updated"
-	fi
+	sysupdate=1
 	echo
 
 	## SWAP file question
