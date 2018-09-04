@@ -1,29 +1,24 @@
 #!/bin/bash
-# Velum masternode autosetup script
-# for Ubuntu Linux
-#
-#
-# If you want this script to be customized for another coin, please contact author in Discord
-# Disclaimer that code or parts of the code can be used only if agreed with author
-VERSION="1.00"
-LOGFILENAME="velummnsetup.log"
 
-U16WALLETLINK="https://github.com/VelumPlatform/VelumPlatform/releases/download/v0.1/linux-nongui.zip" 	#for xenial version (16.04), leave it emty if not supported
-WALLETDIR="velum"                                                                           			#wallet instalation directory name
-DATADIRNAME=".velumcore"                                                                              	#datadir name
-CONFFILENAME="velum.conf"                                                                         		#conf file name
-DAEMONFILE="velumd"                                                                               		#daemon file name
-CLIFILE="velum-cli"                                                                               		#cli file name
-P2PPORT="17500"                                                                                  		#P2P port number
-RPCPORT="18092"                                                                                  		#RPC port number
-COLLAMOUNT="1000"                                                                                		#collateral amount
-TICKER="VLM"                                                                                     		#crypto ticker
+VERSION="1.00"
+LOGFILENAME="vasetup.log"
+
+U16WALLETLINK="https://github.com/VelumPlatform/VelumPlatform/releases/download/v0.1/linux-nongui.zip" 	
+WALLETDIR="velum"
+DATADIRNAME=".velumcore"
+CONFFILENAME="velum.conf"
+DAEMONFILE="velumd"
+CLIFILE="velum-cli"
+P2PPORT="17500"
+RPCPORT="18092"
+COLLAMOUNT="1000"
+TICKER="VLM"
 
 function print_welcome() {
 	echo ""
 	echo "###############################################################################"
 	echo "###                                                                         ###"
-	echo "###               Welcome to Velum masternode autosetup script              ###"
+	echo "###                      Velum masternode autosetup script                  ###"
 	echo "###                                                                         ###"
 	echo "###               Version: ${VERSION}                                             ###"
 	echo "###                                                                         ###"
