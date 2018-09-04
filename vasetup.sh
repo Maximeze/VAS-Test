@@ -96,6 +96,7 @@ function run_questionnaire() {
 
 		if [ $setupufw -eq 1 ]; then
 			echo " P2P tcp port '${P2PPORT}' will be added to the list of allowed"
+			echo " RPC tcp port '${RPCPORT}' will be added to the list of allowed"
 			p2pufwadd=1
 			rpcufwadd=1;
 
@@ -166,51 +167,12 @@ function run_questionnaire() {
 	echo "###    MASTERNODE PREPARATION PART   ###"
 	## Wallet installation
 	echo
-	read -n1 -p 'Download and setup wallet? [Y/n]: ' setupwaltxt && echo
-	echo "#    Download and setup wallet? [Y/n]: ${setupwaltxt}" >>${LOGFILE}
-
-	if [ "$setupwaltxt" = "" ] || [ "$setupwaltxt" = "y" ] || [ "$setupwaltxt" = "Y" ] || [ "$setupwaltxt" = " " ]; then
-		setupwallet=1
-		read -n1 -p ' Configure daemon to start after system reboots? [Y/n]: ' crontxt && echo
-		echo "#    Configure daemon to start after system reboots? [Y/n]: ${crontxt}" >>${LOGFILE}
-		if [ "$crontxt" = "" ] || [ "$crontxt" = "y" ] || [ "$crontxt" = "Y" ] || [ "$crontxt" = " " ]; then
-			loadonboot=1
-		else
-			loadonboot=0
-		fi
-	elif [ "$setupwaltxt" = "n" ] || [ "$setupwaltxt" = "N" ]; then
-		setupwallet=0
-	else
-		echo -en "${RED}   Incorrect answer, wallet will be downloaded and installed${NC} \n"
-	fi
-
+	
+	setupwallet=1	
+	loadonboot=1
+		
 	echo
 	## Masternode setup
-	read -n1 -p 'Configure masternode? [Y/n]: ' setupmntxt && echo
-	echo "#    Configure masternode? [Y/n]: ${setupmntxt}" >>${LOGFILE}
-
-	if [ "$setupmntxt" = "" ] || [ "$setupmntxt" = "y" ] || [ "$setupmntxt" = "Y" ]; then
-		read -n1 -p ' Have you already done collateral transaction and have txhash, txoutput and genkey? [Y/n]: ' coldone && echo
-		echo "#   Have you already done collateral transaction and have txhash, txoutput and genkey? [Y/n]: ${coldone}" >>${LOGFILE}
-		if [ "$coldone" = "" ] || [ "$coldone" = "y" ] || [ "$coldone" = "Y" ] || [ "$coldone" = " " ]; then
-			echo "#   Proceeding to MN questionnaire " >>${LOGFILE}
-		else
-			echo
-			echo " Please perform collateral transaction to desired payee address:"
-			echo
-			echo -en "1. Transfer exactly ${PURPLE}$COLLAMOUNT $TICKER ${NC} to payee address.\n"
-			echo -en "2. Request txhash and txoutput via wallet Debug Console: \n"
-			echo -en "    Navigate to ${PURPLE}Menu -> Tools -> Debug Console${NC} and enter command \n"
-			echo
-			echo -en "       ${PURPLE}masternode outputs ${NC}\n"
-			echo
-			echo "3. Generate masternode private key using Debug Console, enter command "
-			echo
-			echo -en "       ${PURPLE}masternode genkey ${NC}\n"
-			echo
-
-			read -n1 -p ' Press any key when ready to continue or Ctrl+C to abort setup ' coldone
-		fi
 
 		setupmn=1
 
@@ -246,15 +208,6 @@ function run_questionnaire() {
 		read -p " Please provide collateral tx output (txoutput): " txoutput
 		echo "#    Entered txoutput: ${txoutput}" >>${LOGFILE}
 		echo
-
-	elif
-
-		[ "$setupmntxt" = "n" ] || [ "$setupmntxt" = "N" ]
-	then
-		setupmn=0
-	else
-		echo -en "${RED}   ERROR: Incorrect answer, masternode will not be configured${NC}\n"
-	fi
 
 	echo
 	echo
