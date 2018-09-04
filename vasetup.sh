@@ -67,15 +67,9 @@ function run_questionnaire() {
 	echo
 
 	## Fail2Ban installation
-	read -n1 -p 'Install Fail2Ban intrusion protection? [Y/n]: ' setupf2btxt
-	echo "#    Install Fail2Ban intrusion protection? [Y/N]: ${setupf2btxt}" >>${LOGFILE}
-	echo
-	if [ "$setupf2btxt" = "y" ] || [ "$setupf2btxt" = "Y" ] || [ "$setupf2btxt" = "" ] || [ "$setupf2btxt" = " " ]; then
-		setupfail2ban=1
-	else
-		echo " Fail2Ban will not be installed."
-		setupfail2ban=0
-	fi
+	
+	setupfail2ban=1
+
 	echo
 
 	## ufw activation
