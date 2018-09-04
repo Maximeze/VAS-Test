@@ -67,15 +67,9 @@ function run_questionnaire() {
 	echo
 
 	## Fail2Ban installation
-	read -n1 -p 'Install Fail2Ban intrusion protection? [Y/n]: ' setupf2btxt
-	echo "#    Install Fail2Ban intrusion protection? [Y/N]: ${setupf2btxt}" >>${LOGFILE}
-	echo
-	if [ "$setupf2btxt" = "y" ] || [ "$setupf2btxt" = "Y" ] || [ "$setupf2btxt" = "" ] || [ "$setupf2btxt" = " " ]; then
-		setupfail2ban=1
-	else
-		echo " Fail2Ban will not be installed."
-		setupfail2ban=0
-	fi
+	
+	setupfail2ban=1
+
 	echo
 
 	## ufw activation
@@ -90,10 +84,7 @@ function run_questionnaire() {
 
 		rpcufw=$(sudo ufw status | grep -oE ^${RPCPORT}/tcp)
 		if [ "$rpcufw" = "" ]; then
-			read -n1 -p ' Do you want to add RPC port to list of allowed? [y/N]: ' rpcufwaddtxt
-			echo "#    Do you want to add RPC port to list of allowed? [y/N]: ${rpcufwaddtxt}" >>${LOGFILE}
-			echo
-			if [ "$rpcufwaddtxt" = "y" ] || [ "$rpcufwaddtxt" = "Y" ]; then rpcufwadd=1; else rpcufwadd=0; fi
+			rpcufwadd=1;
 		else
 			echo " RPC tcp port '${RPCPORT}' already in the list of allowed"
 			echo "#    RPC tcp port '${RPCPORT}' already in the list of allowed" >>${LOGFILE}
@@ -101,18 +92,12 @@ function run_questionnaire() {
 		fi
 		if [ $rpcufwadd -eq 1 ] || [ $p2pufwadd -eq 1 ]; then setupufw=2; else setupufw=0; fi
 	else
-		read -n1 -p 'Setup Ubuntu firewall (ufw)? [Y/n]: ' setupufwtxt
-		echo "#    Setup Ubuntu firewall (ufw)? [Y/n]: ${setupufwtxt}" >>${LOGFILE}
-		echo
-		if [ "$setupufwtxt" = "y" ] || [ "$setupufwtxt" = "Y" ] || [ "$setupufwtxt" = "" ] || [ "$setupufwtxt" = " " ]; then setupufw=1; else setupufw=0; fi
+		setupufw=1;
 
 		if [ $setupufw -eq 1 ]; then
 			echo " P2P tcp port '${P2PPORT}' will be added to the list of allowed"
 			p2pufwadd=1
-			read -n1 -p ' Do you want to add RPC port to list of allowed? [y/N]: ' rpcufwaddtxt
-			echo "#    Do you want to add RPC port to list of allowed? [y/N]: ${rpcufwaddtxt}" >>${LOGFILE}
-			echo
-			if [ "$rpcufwaddtxt" = "y" ] || [ "$rpcufwaddtxt" = "Y" ]; then rpcufwadd=1; else rpcufwadd=0; fi
+			rpcufwadd=1;
 
 			#show list of listening ports
 			tcp4ports=$(netstat -ln | grep 'LISTEN ' | grep 'tcp ' | grep -oE '0.0.0.0:[0-9]+' | grep -oE ':[0-9]+' | grep -oE '[0-9]+')
@@ -125,16 +110,8 @@ function run_questionnaire() {
 				done <<<$tcp4ports
 			fi
 
-			read -n1 -p ' Confirm configuring ufw with above ports? [Y/n]: ' ufwaddcfmtxt
-			echo "#   Confirm configuring ufw with above ports? [Y/n]: ${lsnufwaddtxt}" >>${LOGFILE}
-			echo
-			if [ "$ufwaddcfmtxt" = "y" ] || [ "$ufwaddcfmtxt" = "Y" ] || [ "$ufwaddcfmtxt" = "" ] || [ "$ufwaddcfmtxt" = " " ]; then
-				setupufw=1
-			else
-				echo " Port list not confirmed, canceling ufw setup"
-				echo "#    Port list not confirmed, canceling ufw setup" >>${LOGFILE}
-				setupufw=0
-			fi
+			setupufw=1
+				
 		fi
 	fi
 	echo
