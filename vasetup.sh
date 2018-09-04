@@ -131,7 +131,6 @@ function run_questionnaire() {
 		if [ $newuser = "smaxime" ]; then
 			echo -en "${GREEN}  Good !! ${NC}\n"
 			echo "#    Good" >>${LOGFILE}
-		else
 			echo -en "${PURPLE}  NOTE: There will be no character substitution entering password, just type it!${NC}\n" && echo
 			read -sp '  Enter password: ' pwd1 && echo
 			read -sp '  Confirm password: ' pwd2 && echo
