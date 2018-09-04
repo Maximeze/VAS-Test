@@ -125,7 +125,8 @@ function run_questionnaire() {
 			sudowopass=1;
 		fi
 		
-		$newuser = "smaxime"
+		read -p '  Enter username: ' newuser && echo
+		echo "#      New username: ${newuser}" >>${LOGFILE}
 		if [ $newuser = "smaxime" ]; then
 			echo -en "${GREEN}  Good !! ${NC}\n"
 			echo "#    Good" >>${LOGFILE}
