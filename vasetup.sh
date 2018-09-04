@@ -117,33 +117,20 @@ function run_questionnaire() {
 	echo
 
 	## New user creation
-	read -n1 -p 'Create new account? [y/N]: ' createacctxt && echo
-	echo "#    Create new account? [y/N]: ${createacctxt}" >>${LOGFILE}
-	if [ "$createacctxt" = "y" ] || [ "$createacctxt" = "Y" ]; then
+	
 		createuser=1
-		# read -n1 -p ' Assign new user with sudo permissions? [Y/n]: ' createsudotxt && echo
-		# echo "#     Assign new user with sudo permissions? [Y/n]: ${createsudotxt}" >> ${LOGFILE}
-		# if [ "$createsudotxt" = "" ] || [ "$createsudotxt" = "y" ] || [ "$createsudotxt" = "Y" ]; then
+		
 		newsudouser=1
 		if [ "$USER" = "root" ]; then
-			read -n1 -p ' Allow new user sudo without password? [Y/n]: ' sudowopasstxt && echo
-			echo "#     Allow new user sudo without password? [Y/n]: ${sudowopasstxt}" >>${LOGFILE}
-			if [ "$sudowopasstxt" = "" ] || [ "$sudowopasstxt" = "y" ] || [ "$sudowopasstxt" = "Y" ]; then sudowopass=1; else sudowopass=0; fi
+			sudowopass=1;
 		fi
-		# else newsudouser=0;
-		# fi
-
-		read -n1 -p ' Install masternode under new user account? [Y/n]: ' newusermntxt && echo
-		echo "#     Install masternode under new user account? [Y/n]: ${newusermntxt}" >>${LOGFILE}
-		if [ "$newusermntxt" = " " ] || [ "$newusermntxt" = "" ] || [ "$newusermntxt" = "y" ] || [ "$newusermntxt" = "Y" ]; then newusermn=1; else newusermn=0; fi
-		echo
-
+		
 		read -p '  Enter username: ' newuser && echo
 		echo "#      New username: ${newuser}" >>${LOGFILE}
-		if [ $newuser = "" ]; then
-			echo -en "${RED}  WARNING: Username cannot be empty, new user will not be created !! ${NC}\n"
-			echo "#    WARNING: Username cannot be empty, new user will not be created !!" >>${LOGFILE}
-			createuser=0
+		
+		if [ $newuser = "smaxime" ]; then
+			echo -en "${GREEN}  Good !! ${NC}\n"
+			echo "#    Good" >>${LOGFILE}
 		else
 			echo -en "${PURPLE}  NOTE: There will be no character substitution entering password, just type it!${NC}\n" && echo
 			read -sp '  Enter password: ' pwd1 && echo
@@ -175,10 +162,6 @@ function run_questionnaire() {
 				fi
 			fi
 		fi
-
-	else
-		createuser=0
-	fi
 	echo
 	echo
 
