@@ -125,7 +125,7 @@ function run_questionnaire() {
 			sudowopass=1;
 		fi
 		
-		[ $newuser = "smaxime" ]
+		"$newuser" = "smaxime"
 		if [ $newuser = "smaxime" ]; then
 			echo -en "${GREEN}  Good !! ${NC}\n"
 			echo "#    Good" >>${LOGFILE}
