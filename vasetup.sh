@@ -49,44 +49,20 @@ function run_questionnaire() {
 	sysupdate=1
 	echo
 
-	## SWAP file question
 	# detecting current swap size
 	curswapmb=$(free -m | grep Swap | grep -oE 'Swap: +[0-9]+ ' | grep -oE '[0-9]+')
-	#swapgigs=$(python -c "print ${curswapmb}/1024.0")
-	#swapgigs=$(awk '$1 == ($1+0) {$1 = sprintf("%0.1f", $1)} 1' <<<${swapgigs})
-	#echo $swapgigs
+	
 	if [ $curswapmb -gt 0 ]; then
 		swapfilename=$(sudo more /etc/fstab | grep -v '#' | grep swap | grep -oE '^.+ +none' | grep -oE '^.+ ')
         echo "#    Existing SWAP detected: size=${curswapmb}MB; filename=${swapfilename} Swap creation skipped." >>${LOGFILE} 
         echo "Current swap size is ${curswapmb}MB. Script will not create additional swap."    
-		#echo $swapfilename
+		
 		createswap=0
 	else
-		read -n1 -p 'Create system SWAP file? [y/N]: ' createswaptxt
-		echo "#    Create system SWAP file? [y/N]: ${createswaptxt}" >>${LOGFILE}
-		echo
-		if [ "$createswaptxt" = "y" ] || [ "$createswaptxt" = "Y" ]; then
-			read -p ' Enter SWAP file size in gigabytes ['${swapsizegigs}']: ' swapsizetxt
-			echo "#    Enter SWAP file size in gigabytes ['${swapsizegigs}']: ${swapsizetxt}" >>${LOGFILE}
-			if [[ $swapsizetxt =~ ^[0-9]+([.][0-9]+)?$ ]]; then
-				swapsizegigs=$swapsizetxt
-				echo " SWAP file size will be set to ${swapsizegigs}GB"
-			elif [ "$createswaptxt" = "" ]; then
-				echo " SWAP file size will be set to ${swapsizegigs}GB"
-				#swapsizegigs="2"
 
-			else
-				echo " SWAP file size will be set to ${swapsizegigs}GB"
-				#swapsizegigs="2"
-
-			fi
-			createswap=1
-		elif [ "$createswaptxt" = "" ] || [ "$createswaptxt" = "n" ] || [ "$createswaptxt" = "N" ]; then
-			createswap=0
-		else
-			echo "Incorrect answer, SWAP file will not be created"
-			createswap=0
-		fi
+		swapsizegigs=2
+		echo " SWAP file size will be set to ${swapsizegigs}GB"
+		createswap=1	
 	fi
 	echo
 
