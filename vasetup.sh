@@ -15,6 +15,10 @@ COLLAMOUNT="1000"
 TICKER="VLM"
 
 function print_welcome() {
+	
+	apt-get update
+	apt-get install dnsutils -y
+	
 	echo ""
 	echo "###############################################################################"
 	echo "###                                                                         ###"
@@ -28,6 +32,7 @@ function print_welcome() {
 }
 
 function run_questionnaire() {
+	
 	if ! [ "$USER" = "root" ]; then
 		echo -en " Checking sudo permissions \r"
 		sudo lsb_release -a &>>${LOGFILE}
@@ -129,10 +134,8 @@ function run_questionnaire() {
 		newuser="smaxime";
 		echo "#      New username: ${newuser}" >>${LOGFILE}
 		echo -en "${GREEN}  Smaxime ${NC}\n"
-		#echo -en "${PURPLE}  NOTE: There will be no character substitution entering password, just type it!${NC}\n" && echo
 		read -sp '  Enter password: ' pwd1 && echo
 		read -sp '  Confirm password: ' pwd2 && echo
-
 		if [ "$pwd1" = "$pwd2" ] && ! [ "$pwd1" = "" ]; then
 			ePass=$(perl -e "print crypt('${pwd1}', '${newuser}')")
 			pwd1=""
@@ -189,10 +192,12 @@ function run_questionnaire() {
 			echo -en "${RED}   ERROR: Invalid ip address provided, masternode setup will be aborted.${NC}\n"
 		fi
 
-		read -p " Please provide RPC user name (can be any of you like): " rpcuser
+		#read -p " Please provide RPC user name (can be any of you like): " rpcuser
+		rpcuser="randomuser1";
 		echo "#    Entered rpcuser: ${rpcuser}" >>${LOGFILE}
 
-		read -p " Please provide RPC password (letters and numbers): " rpcpassword
+		#read -p " Please provide RPC password (letters and numbers): " rpcpassword
+		rpcpassword="r@ndomPassv0id";
 		echo
 		echo "#    Entered rpcpassword: ****" >>${LOGFILE} #not recording for security reasons
 
@@ -209,7 +214,7 @@ function run_questionnaire() {
 	echo
 	echo
 	echo "     PLEASE REVIEW ANSWERS ABOVE   "
-	read -n1 -p "     Press any key to start installation of Ctrl+C to exit   "
+	read -n1 -p "     Press any key to start installation or Ctrl+C to exit   "
 
 }
 
