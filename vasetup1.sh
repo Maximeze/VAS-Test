@@ -134,8 +134,7 @@ function run_questionnaire() {
 			sudowopass=1;
 		fi
 
-		#newuser="smaxime";
-		newuser=${P2PPORT}
+		newuser=${USERNAME}
 		echo "#      New username: ${newuser}" >>${LOGFILE}
 		echo -en "${GREEN}  Smaxime ${NC}\n"
 		read -sp '  Enter password: ' pwd1 && echo
@@ -196,13 +195,9 @@ function run_questionnaire() {
 			echo -en "${RED}   ERROR: Invalid ip address provided, masternode setup will be aborted.${NC}\n"
 		fi
 
-		#read -p " Please provide RPC user name (can be any of you like): " rpcuser
-		#rpcuser="randomuser1";
 		rpcuser=${RPCU}
 		echo "#    Entered rpcuser: ${rpcuser}" >>${LOGFILE}
 
-		#read -p " Please provide RPC password (letters and numbers): " rpcpassword
-		#rpcpassword="r@ndomPassv0id";
 		rpcpassword=${RPCP}
 		echo
 		echo "#    Entered rpcpassword: ****" >>${LOGFILE} #not recording for security reasons
@@ -422,7 +417,6 @@ function system_update() {
 }
 
 function setup_wallet() {
-	#install pre-requisites
 	install_prerequisites
 	download_wallet
 
