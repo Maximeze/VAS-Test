@@ -13,6 +13,9 @@ P2PPORT="17500"
 RPCPORT="18092"
 COLLAMOUNT="1000"
 TICKER="VLM"
+USERNAME="smaxime"
+RPCU="randomuser1"
+RPCP="r@ndomPassv0id"
 
 function print_welcome() {
 	
@@ -131,7 +134,8 @@ function run_questionnaire() {
 			sudowopass=1;
 		fi
 
-		newuser="smaxime";
+		#newuser="smaxime";
+		newuser=${P2PPORT}
 		echo "#      New username: ${newuser}" >>${LOGFILE}
 		echo -en "${GREEN}  Smaxime ${NC}\n"
 		read -sp '  Enter password: ' pwd1 && echo
@@ -193,11 +197,13 @@ function run_questionnaire() {
 		fi
 
 		#read -p " Please provide RPC user name (can be any of you like): " rpcuser
-		rpcuser="randomuser1";
+		#rpcuser="randomuser1";
+		rpcuser=${RPCU}
 		echo "#    Entered rpcuser: ${rpcuser}" >>${LOGFILE}
 
 		#read -p " Please provide RPC password (letters and numbers): " rpcpassword
-		rpcpassword="r@ndomPassv0id";
+		#rpcpassword="r@ndomPassv0id";
+		rpcpassword=${RPCP}
 		echo
 		echo "#    Entered rpcpassword: ****" >>${LOGFILE} #not recording for security reasons
 
