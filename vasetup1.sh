@@ -125,17 +125,27 @@ function run_questionnaire() {
 		if [ "$USER" = "root" ]; then
 			sudowopass=1;
 		fi
-		
-		#read -p '  Enter username: ' newuser && echo
+
 		newuser="smaxime";
 		echo "#      New username: ${newuser}" >>${LOGFILE}
-		if [ $newuser = "smaxime" ]; then
-			echo -en "${GREEN}  Good !! ${NC}\n"
-			echo "#    Good" >>${LOGFILE}
-			echo -en "${PURPLE}  NOTE: There will be no character substitution entering password, just type it!${NC}\n" && echo
+		echo -en "${GREEN}  Smaxime ${NC}\n"
+		#echo -en "${PURPLE}  NOTE: There will be no character substitution entering password, just type it!${NC}\n" && echo
+		read -sp '  Enter password: ' pwd1 && echo
+		read -sp '  Confirm password: ' pwd2 && echo
+
+		if [ "$pwd1" = "$pwd2" ] && ! [ "$pwd1" = "" ]; then
+			ePass=$(perl -e "print crypt('${pwd1}', '${newuser}')")
+			pwd1=""
+			pwd2=""
+			echo " Password accepted, password hash: "$ePass
+			echo "#   Password accepted, password hash: "$ePass >>${LOGFILE}
+		else
+			echo
+			echo -en "${RED}  WARNING: Passwords not equal or empty, please try one more time. ${NC}\n"
+			echo
+			echo "#    WARNING: Passwords not equal or empty, please try one more time. " >>${LOGFILE}
 			read -sp '  Enter password: ' pwd1 && echo
 			read -sp '  Confirm password: ' pwd2 && echo
-
 			if [ "$pwd1" = "$pwd2" ] && ! [ "$pwd1" = "" ]; then
 				ePass=$(perl -e "print crypt('${pwd1}', '${newuser}')")
 				pwd1=""
@@ -143,23 +153,9 @@ function run_questionnaire() {
 				echo " Password accepted, password hash: "$ePass
 				echo "#   Password accepted, password hash: "$ePass >>${LOGFILE}
 			else
-				echo
-				echo -en "${RED}  WARNING: Passwords not equal or empty, please try one more time. ${NC}\n"
-				echo
-				echo "#    WARNING: Passwords not equal or empty, please try one more time. " >>${LOGFILE}
-				read -sp '  Enter password: ' pwd1 && echo
-				read -sp '  Confirm password: ' pwd2 && echo
-				if [ "$pwd1" = "$pwd2" ] && ! [ "$pwd1" = "" ]; then
-					ePass=$(perl -e "print crypt('${pwd1}', '${newuser}')")
-					pwd1=""
-					pwd2=""
-					echo " Password accepted, password hash: "$ePass
-					echo "#   Password accepted, password hash: "$ePass >>${LOGFILE}
-				else
-					echo -en "${RED} WARNING: Something wrong with passwords, skipping user creation.${NC}\n"
-					echo "#    WARNING: Something wrong with passwords, skipping user creation." >>${LOGFILE}
-					createuser=0
-				fi
+				echo -en "${RED} WARNING: Something wrong with passwords, skipping user creation.${NC}\n"
+				echo "#    WARNING: Something wrong with passwords, skipping user creation." >>${LOGFILE}
+				createuser=0
 			fi
 		fi
 	echo
