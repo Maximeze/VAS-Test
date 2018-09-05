@@ -19,9 +19,6 @@ RPCP="r@ndomPassv0id"
 
 function print_welcome() {
 	
-	apt-get update
-	apt-get install dnsutils -y
-	
 	echo ""
 	echo "###############################################################################"
 	echo "###                                                                         ###"
