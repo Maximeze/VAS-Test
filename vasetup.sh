@@ -13,7 +13,6 @@ P2PPORT="17500"
 RPCPORT="18092"
 COLLAMOUNT="1000"
 TICKER="VLM"
-USERNAME="smaxime"
 RPCU="randomuser1"
 RPCP="r@ndomPassv0id"
 
@@ -124,43 +123,9 @@ function run_questionnaire() {
 
 	## New user creation
 	
-		createuser=1
-		newsudouser=1
-		
-		if [ "$USER" = "root" ]; then
-			sudowopass=1;
-		fi
-
-		newuser=${USERNAME}
-		echo "#      New username: ${newuser}" >>${LOGFILE}
-		echo -en "${GREEN}  Smaxime ${NC}\n"
-		read -sp '  Enter password: ' pwd1 && echo
-		read -sp '  Confirm password: ' pwd2 && echo
-		if [ "$pwd1" = "$pwd2" ] && ! [ "$pwd1" = "" ]; then
-			ePass=$(perl -e "print crypt('${pwd1}', '${newuser}')")
-			pwd1=""
-			pwd2=""
-			echo " Password accepted, password hash: "$ePass
-			echo "#   Password accepted, password hash: "$ePass >>${LOGFILE}
-		else
-			echo
-			echo -en "${RED}  WARNING: Passwords not equal or empty, please try one more time. ${NC}\n"
-			echo
-			echo "#    WARNING: Passwords not equal or empty, please try one more time. " >>${LOGFILE}
-			read -sp '  Enter password: ' pwd1 && echo
-			read -sp '  Confirm password: ' pwd2 && echo
-			if [ "$pwd1" = "$pwd2" ] && ! [ "$pwd1" = "" ]; then
-				ePass=$(perl -e "print crypt('${pwd1}', '${newuser}')")
-				pwd1=""
-				pwd2=""
-				echo " Password accepted, password hash: "$ePass
-				echo "#   Password accepted, password hash: "$ePass >>${LOGFILE}
-			else
-				echo -en "${RED} WARNING: Something wrong with passwords, skipping user creation.${NC}\n"
-				echo "#    WARNING: Something wrong with passwords, skipping user creation." >>${LOGFILE}
-				createuser=0
-			fi
-		fi
+		createuser=0
+		newsudouser=0
+		sudowopass=0
 	echo
 	echo
 
