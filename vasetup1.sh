@@ -119,7 +119,7 @@ function run_questionnaire() {
 				done <<<$tcp4ports
 			fi
 
-			setupufw=1
+			#setupufw=1
 				
 		fi
 	fi
@@ -128,8 +128,8 @@ function run_questionnaire() {
 	## New user creation
 	
 		createuser=1
-		
 		newsudouser=1
+		
 		if [ "$USER" = "root" ]; then
 			sudowopass=1;
 		fi
